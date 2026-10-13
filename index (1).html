@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kael Artist — Editora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1812;
+    --ink-soft:#26211a;
+    --washi:#F1E9D3;
+    --washi-dim:#e2d6b3;
+    --hanko:#B7331F;
+    --hanko-dark:#8a2617;
+    --indigo:#2B3A56;
+    --gold:#C6A15B;
+    --display: 'Shippori Mincho B1', serif;
+    --body: 'Zen Kaku Gothic New', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--washi);
+    color:var(--ink);
+    font-family:var(--body);
+    font-weight:400;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--hanko);color:var(--washi);}
+
+  a{color:inherit;text-decoration:none;}
+  .eyebrow{
+    font-family:var(--body);
+    text-transform:uppercase;
+    letter-spacing:.28em;
+    font-size:.72rem;
+    font-weight:700;
+    color:var(--hanko);
+  }
+  .stamp{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:1.9rem;height:1.9rem;
+    background:var(--hanko);
+    color:var(--washi);
+    font-family:var(--display);
+    font-weight:800;
+    font-size:1.05rem;
+    flex:none;
+    border:2px solid var(--ink);
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;
+    z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem clamp(1.2rem,4vw,3.2rem);
+    background:rgba(27,24,18,.94);
+    color:var(--washi);
+    backdrop-filter:blur(6px);
+  }
+  .logo{
+    display:flex;align-items:center;gap:.6rem;
+    font-family:var(--display);
+    font-weight:800;
+    font-size:1.15rem;
+    letter-spacing:.02em;
+  }
+  nav{display:flex;gap:clamp(1rem,2.4vw,2.2rem);}
+  nav a{
+    font-size:.82rem;
+    letter-spacing:.05em;
+    color:var(--washi-dim);
+    position:relative;
+    padding-bottom:3px;
+  }
+  nav a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:var(--hanko);transition:width .25s ease;
+  }
+  nav a:hover{color:var(--washi);}
+  nav a:hover::after{width:100%;}
+  .nav-toggle{display:none;background:none;border:none;color:var(--washi);font-size:1.4rem;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:7rem clamp(1.2rem,6vw,5rem) 4rem;
+    background:var(--ink);
+    color:var(--washi);
+    overflow:hidden;
+    border-bottom:6px solid var(--ink);
+  }
+  .speedlines{
+    position:absolute;inset:-10%;
+    background:repeating-conic-gradient(
+      from 0deg,
+      rgba(241,233,211,.05) 0deg 1.1deg,
+      transparent 1.1deg 6deg
+    );
+    transform-origin:82% 30%;
+    animation:spin 90s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .hero-hanko{
+    position:absolute;
+    top:6.5rem;right:clamp(1.2rem,6vw,5rem);
+    width:96px;height:96px;
+    border:3px solid var(--hanko);
+    color:var(--hanko);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);
+    font-weight:800;
+    font-size:2.6rem;
+    transform:rotate(9deg);
+    background:rgba(183,51,31,.06);
+  }
+  .hero-inner{position:relative;z-index:2;max-width:900px;}
+  .hero h1{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(2.6rem,6.6vw,5.2rem);
+    line-height:1.02;
+    letter-spacing:-.01em;
+    margin:1.1rem 0 1.6rem;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--hanko);
+  }
+  .hero p{
+    font-size:clamp(1rem,1.6vw,1.2rem);
+    color:var(--washi-dim);
+    max-width:44ch;
+    line-height:1.7;
+    margin-bottom:2.4rem;
+  }
+  .cta-row{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--body);
+    font-weight:700;
+    font-size:.85rem;
+    letter-spacing:.03em;
+    padding:.95rem 1.7rem;
+    border:2px solid var(--washi);
+    display:inline-flex;align-items:center;gap:.5rem;
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-solid{background:var(--hanko);border-color:var(--hanko);color:var(--washi);}
+  .btn-solid:hover{background:var(--hanko-dark);transform:translateY(-2px);}
+  .btn-ghost:hover{background:var(--washi);color:var(--ink);transform:translateY(-2px);}
+  .scroll-cue{
+    position:absolute;bottom:2rem;left:clamp(1.2rem,6vw,5rem);
+    font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;
+    color:var(--washi-dim);
+    display:flex;align-items:center;gap:.6rem;
+  }
+  .scroll-cue::after{
+    content:"";width:34px;height:1px;background:var(--washi-dim);
+  }
+
+  section{padding:6.5rem clamp(1.2rem,6vw,5rem);}
+  .section-head{
+    display:flex;align-items:baseline;gap:1rem;
+    margin-bottom:3rem;
+  }
+  .section-head h2{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(1.9rem,3.4vw,2.8rem);
+  }
+
+  /* ---------- SOBRE ---------- */
+  .sobre{background:var(--washi);}
+  .sobre-grid{
+    display:grid;
+    grid-template-columns:1.05fr 1fr;
+    gap:clamp(2rem,5vw,5rem);
+    align-items:start;
+  }
+  .manifesto{
+    font-family:var(--display);
+    font-size:clamp(1.3rem,2.4vw,1.85rem);
+    line-height:1.55;
+    border-left:3px solid var(--hanko);
+    padding-left:1.6rem;
+  }
+  .manifesto span{color:var(--hanko);}
+  .pillars{display:flex;flex-direction:column;gap:0;}
+  .pillar{
+    display:grid;
+    grid-template-columns:3.2rem 1fr;
+    gap:1.1rem;
+    padding:1.5rem 0;
+    border-top:1px solid var(--washi-dim);
+  }
+  .pillar:last-child{border-bottom:1px solid var(--washi-dim);}
+  .pillar .num{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:1.1rem;
+    color:var(--hanko);
+  }
+  .pillar h3{font-family:var(--display);font-size:1.08rem;margin-bottom:.4rem;}
+  .pillar p{font-size:.92rem;color:#4a4437;line-height:1.6;}
+
+  /* ---------- CATALOGO ---------- */
+  .catalogo{background:var(--ink);color:var(--washi);}
+  .catalogo .section-head h2, .catalogo .eyebrow{color:var(--washi);}
+  .catalogo .eyebrow{color:var(--gold);}
+  .book-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:2rem;
+  }
+  .book{
+    position:relative;
+    background:var(--ink-soft);
+    border:1px solid rgba(241,233,211,.14);
+    transition:transform .3s ease, border-color .3s ease;
+  }
+  .book:hover{transform:translateY(-6px) rotate(-.4deg);border-color:var(--hanko);}
+  .cover{
+    height:280px;
+    position:relative;
+    display:flex;align-items:flex-end;
+    padding:1.2rem;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:"";position:absolute;inset:0;opacity:.5;
+    background:repeating-linear-gradient(115deg, rgba(255,255,255,.06) 0 2px, transparent 2px 10px);
+  }
+  .cover span{
+    position:relative;z-index:1;
+    font-family:var(--display);font-weight:700;font-size:1.15rem;
+    color:var(--washi);line-height:1.25;
+  }
+  .c1{background:linear-gradient(155deg,#5b2a2a,#1B1812 70%);}
+  .c2{background:linear-gradient(155deg,#2B3A56,#1B1812 70%);}
+  .c3{background:linear-gradient(155deg,#3a4a2e,#1B1812 70%);}
+  .c4{background:linear-gradient(155deg,#5a4a1f,#1B1812 70%);}
+  .c5{background:linear-gradient(155deg,#4a2a4f,#1B1812 70%);}
+  .c6{background:linear-gradient(155deg,#2a4a4a,#1B1812 70%);}
+  .book-meta{padding:1.1rem 1.2rem 1.4rem;}
+  .book-meta .genre{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
+  .book-meta h3{font-family:var(--display);font-size:1.05rem;margin:.4rem 0 .4rem;}
+  .book-meta p{font-size:.86rem;color:var(--washi-dim);line-height:1.55;}
+
+  /* ---------- ARTISTAS ---------- */
+  .artistas{background:var(--washi);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    position:relative;
+  }
+  .step{
+    position:relative;
+    padding:0 1.6rem 0 0;
+  }
+  .step + .step{padding-left:1.6rem;border-left:1px dashed var(--ink);}
+  .step .num{
+    font-family:var(--display);font-weight:800;
+    font-size:2.6rem;color:var(--hanko);
+    line-height:1;margin-bottom:1rem;
+  }
+  .step h3{font-family:var(--display);font-size:1.2rem;margin-bottom:.7rem;}
+  .step p{font-size:.92rem;line-height:1.65;color:#4a4437;margin-bottom:1rem;}
+  .artistas-cta{
+    margin-top:3.2rem;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:1.5rem;flex-wrap:wrap;
+    border-top:2px solid var(--ink);padding-top:2rem;
+  }
+  .artistas-cta p{max-width:44ch;font-size:.95rem;line-height:1.6;}
+  .btn-ink{border-color:var(--ink);}
+  .btn-ink:hover{background:var(--ink);color:var(--washi);}
+
+  /* ---------- CONTATO / FOOTER ---------- */
+  footer{
+    background:var(--indigo);
+    color:var(--washi);
+    padding:6rem clamp(1.2rem,6vw,5rem) 2.5rem;
+  }
+  .foot-top{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:2rem;flex-wrap:wrap;
+    padding-bottom:3.5rem;
+    border-bottom:1px solid rgba(241,233,211,.18);
+  }
+  footer h2{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(2rem,4.6vw,3.4rem);
+    line-height:1.08;max-width:14ch;
+  }
+  .foot-contact{display:flex;flex-direction:column;gap:.6rem;align-items:flex-start;}
+  .foot-contact a{
+    font-size:1rem;border-bottom:1px solid rgba(241,233,211,.4);padding-bottom:2px;
+  }
+  .foot-contact a:hover{border-color:var(--hanko);color:var(--hanko);}
+  .foot-domain{
+    font-family:var(--display);font-weight:700;
+    font-size:1.05rem;color:var(--gold);
+  }
+  .foot-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:1rem;
+    padding-top:2rem;
+    font-size:.78rem;color:rgba(241,233,211,.6);
+  }
+  .fim{
+    font-family:var(--display);letter-spacing:.3em;font-size:.72rem;
+    display:flex;align-items:center;gap:.7rem;color:var(--gold);
+  }
+  .fim::before,.fim::after{content:"";width:22px;height:1px;background:var(--gold);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion:reduce){
+    .speedlines{animation:none;}
+    .reveal{transition:none;opacity:1;transform:none;}
+  }
+
+  @media(max-width:860px){
+    .sobre-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;gap:2.4rem;}
+    .step + .step{border-left:none;border-top:1px dashed var(--ink);padding-left:0;padding-top:2rem;}
+    .foot-top{align-items:flex-start;}
+  }
+  @media(max-width:640px){
+    nav{
+      position:absolute;top:100%;left:0;right:0;
+      background:var(--ink);
+      flex-direction:column;
+      padding:1.2rem 1.5rem 1.6rem;
+      gap:1rem;
+      display:none;
+    }
+    nav.open{display:flex;}
+    .nav-toggle{display:block;}
+    .hero-hanko{width:66px;height:66px;font-size:1.8rem;top:5.6rem;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="stamp">K</span> KAEL ARTIST</div>
+  <nav id="nav">
+    <a href="#sobre">Sobre</a>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#artistas">Para artistas</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">☰</button>
+</header>
+
+<section class="hero">
+  <div class="speedlines"></div>
+  <div class="hero-hanko">解</div>
+  <div class="hero-inner">
+    <span class="eyebrow">Editora de mangás e quadrinhos autorais</span>
+    <h1>Toda história<br>merece um <em>traço</em><br>que a defenda.</h1>
+    <p>A Kael Artist publica mangás e HQs de autoria brasileira — histórias desenhadas aqui, com a técnica de lá e a alma daqui. Do rascunho ao volume impresso, cuidamos de cada página como se fosse a nossa.</p>
+    <div class="cta-row">
+      <a href="#catalogo" class="btn btn-solid">Ver catálogo</a>
+      <a href="#artistas" class="btn btn-ghost">Enviar seu mangá</a>
+    </div>
+  </div>
+  <div class="scroll-cue">role a página</div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="section-head reveal">
+    <span class="eyebrow">Sobre a editora</span>
+  </div>
+  <div class="sobre-grid">
+    <p class="manifesto reveal">
+      Nascemos entre fanzines de garagem e o hábito de ler mangá de trás pra frente.
+      A Kael Artist existe para provar que <span>desenho brasileiro</span> aguenta o
+      mesmo cuidado editorial que qualquer estúdio japonês — sem perder o sotaque.
+    </p>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <span class="num">01</span>
+        <div><h3>Autoria brasileira</h3><p>Publicamos apenas roteiristas e desenhistas do Brasil, do primeiro capítulo ao volume encadernado.</p></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="num">02</span>
+        <div><h3>Traço preservado</h3><p>Nada de "corrigir" o estilo do artista. Editamos o texto, nunca a mão de quem desenha.</p></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="num">03</span>
+        <div><h3>Impressão cuidada</h3><p>Papel, lombada e capa são escolhidos capítulo por capítulo — cada obra tem seu próprio acabamento.</p></div>
+      </div>
+      <div class="pillar reveal">
+        <span class="num">04</span>
+        <div><h3>Comunidade de leitores</h3><p>Lançamentos com tiragem limitada, encontros com autores e conteúdo extra para quem acompanha desde o zine.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="catalogo" id="catalogo">
+  <div class="section-head reveal">
+    <span class="eyebrow">Catálogo</span>
+    <h2>Lançamentos e destaques</h2>
+  </div>
+  <div class="book-grid">
+    <div class="book reveal">
+      <div class="cover c1"><span>Maré de Tinta</span></div>
+      <div class="book-meta"><span class="genre">Drama · slice of life</span><h3>Maré de Tinta</h3><p>Uma tatuadora de Salvador reconstrói a própria história através dos desenhos que faz nos outros.</p></div>
+    </div>
+    <div class="book reveal">
+      <div class="cover c2"><span>Circuito Neon</span></div>
+      <div class="book-meta"><span class="genre">Ficção científica</span><h3>Circuito Neon</h3><p>São Paulo, 2094: uma entregadora hackeia drones para investigar o próprio desligamento.</p></div>
+    </div>
+    <div class="book reveal">
+      <div class="cover c3"><span>Filhos do Cerrado</span></div>
+      <div class="book-meta"><span class="genre">Fantasia</span><h3>Filhos do Cerrado</h3><p>Espíritos do bioma se levantam quando uma vila decide represar o último rio livre da região.</p></div>
+    </div>
+    <div class="book reveal">
+      <div class="cover c4"><span>Punho de Vidro</span></div>
+      <div class="book-meta"><span class="genre">Ação · esportes</span><h3>Punho de Vidro</h3><p>Um lutador com as mãos frágeis precisa reinventar o próprio estilo antes do título nacional.</p></div>
+    </div>
+    <div class="book reveal">
+      <div class="cover c5"><span>O Caderno de Yara</span></div>
+      <div class="book-meta"><span class="genre">Mistério</span><h3>O Caderno de Yara</h3><p>Uma investigadora amadora decifra bilhetes deixados em cadernos escolares abandonados.</p></div>
+    </div>
+    <div class="book reveal">
+      <div class="cover c6"><span>Sete Luas sobre Belém</span></div>
+      <div class="book-meta"><span class="genre">Fantasia regional</span><h3>Sete Luas sobre Belém</h3><p>Um barqueiro do Marajó guia entidades da floresta entre o mundo dos vivos e o das águas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="artistas" id="artistas">
+  <div class="section-head reveal">
+    <span class="eyebrow">Para artistas</span>
+    <h2>Como publicar com a gente</h2>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="num">01</div>
+      <h3>Envie sua obra</h3>
+      <p>Mande de 15 a 30 páginas prontas (ou storyboard, se ainda não tiver arte final) e uma sinopse de até 10 linhas.</p>
+    </div>
+    <div class="step reveal">
+      <div class="num">02</div>
+      <h3>Leitura editorial</h3>
+      <p>Nossa equipe lê tudo o que chega. Em até 6 semanas você recebe um retorno com apontamentos, mesmo em caso de recusa.</p>
+    </div>
+    <div class="step reveal">
+      <div class="num">03</div>
+      <h3>Publicação</h3>
+      <p>Aprovada a obra, definimos formato, tiragem e cronograma juntos — o artista participa de cada etapa até a gráfica.</p>
+    </div>
+  </div>
+  <div class="artistas-cta reveal">
+    <p>Sem taxa de submissão, sem letra miúda. Se o traço é seu, a decisão criativa também é.</p>
+    <a href="mailto:contato@kaimanga.com.br" class="btn btn-ink">contato@kaimanga.com.br</a>
+  </div>
+</section>
+
+<footer id="contato">
+  <div class="foot-top">
+    <h2>Vamos publicar sua próxima história.</h2>
+    <div class="foot-contact">
+      <a href="mailto:contato@kaimanga.com.br">contato@kaimanga.com.br</a>
+      <a href="https://kaimanga.com.br" target="_blank" rel="noopener">kaimanga.com.br</a>
+      <span class="foot-domain">@kaelartist</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Kael Artist — Editora. Todos os direitos reservados.</span>
+    <span class="fim">FIM</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
